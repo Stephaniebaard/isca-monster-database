@@ -88,7 +88,7 @@ function getFilterCriteria()
 function getFilteredMonsterArray(monstersArr)
 {
 	const filterCriteria = getFilterCriteria();
-	
+
 	return monstersArr.filter(monster => 
 	{
 		// If color filter exists, and we do NOT match.
@@ -101,10 +101,10 @@ function getFilteredMonsterArray(monstersArr)
 			for(let [attributeKey, filterCondition] of Object.entries(filterCriteria.attributes))
 			{
 				// Skip if attribute does not exist on monster.
-				if(monster[attributeKey] === undefined)
+				if(monster.stats[attributeKey] === undefined)
 					continue;
 				
-				const value = monster[attributeKey]; // Current monster attribute count saved in value
+				const value = monster.stats[attributeKey]; // Current monster attribute count saved in value
 				const { filterMethod, amount } = filterCondition;
 
 				switch(filterMethod)
@@ -141,6 +141,7 @@ document.getElementById("filtered-search-monster-form-submit").addEventListener(
 {
 	e.preventDefault();
 	const filteredMonsterArray = getFilteredMonsterArray(monsters);
+	console.log(getFilteredMonsterArray(monsters));
 	renderMonsterCards(filteredMonsterArray);
 	resultParagraph.textContent = `Showing ${filteredMonsterArray.length} monsters that match your filters. (out of ${monsters.length})`;
 	console.log(getFilteredMonsterArray(monsters));
